@@ -18,6 +18,9 @@ const UpdateSchedule = () => {
   function handleClick(e) {
     const value = e.currentTarget.getAttribute("data");
     setSchedule((prevData) => {
+      if (!Array.isArray(prevData)) {
+        return [value];
+      }
       if (prevData.indexOf(value) !== -1) {
         return prevData.filter((item) => item !== value);
       } else {
