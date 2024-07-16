@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getSocket } from "../socket";
 import Peer from "peerjs";
 import { v4 as uuid } from "uuid";
-import VideoPlayer from "../components/VideoPlayer";
+import VideoPlayer from "../components/interview/VideoPlayer";
 import { peersReducer } from "../peerReducer";
 import { addPeerAction, removePeerAction } from "../peerActions";
 
@@ -68,41 +68,7 @@ const VideoCall = () => {
 
   console.log(peers);
 
-  // const handleCamera = () => {
-  //   // Stop current video tracks
-  //   stream.getVideoTracks().forEach((track) => track.stop());
 
-  //   // Update camera state using the previous state
-  //   setCamera(!camera);
-  //   // Request new stream with updated camera state
-  //   navigator.mediaDevices
-  //     .getUserMedia({ video: newCameraState, audio: voice })
-  //     .then((newStream) => {
-  //       console.log(newStream);
-  //       setStream(newStream);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error accessing media devices.", error);
-  //     });
-  // };
-  // const handleAudio = () => {
-  //   // Stop current audio tracks
-  //   stream.getAudioTracks().forEach((track) => track.stop());
-
-  //   // Update voice state using the previous state
-  //   setVoice(!voice);
-
-  //   // Request new stream with updated voice state
-  //   navigator.mediaDevices
-  //     .getUserMedia({ video: camera, audio: newVoiceState })
-  //     .then((newStream) => {
-  //       console.log(newStream);
-  //       setStream(newStream);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error accessing media devices.", error);
-  //     });
-  // };
   const handleQuit = () => {
     stream.getVideoTracks().forEach((track) => track.stop());
     stream.getAudioTracks().forEach((track) => track.stop());
@@ -110,28 +76,26 @@ const VideoCall = () => {
   };
 
   return (
-    <>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="flex justify-center">
-          <VideoPlayer stream={stream} />
-
-          {Object.values(peers).map((peer) => (
-            <VideoPlayer key={peer.id} stream={peer.stream} />
-          ))}
-          <div>
-            {/* <button className="p-12" onClick={handleCamera}>
-              Toggle Camera
-            </button>
-            <button className="p-12" onClick={handleAudio}>
-              Toggle Audio
-            </button> */}
-            <button className="p-12" onClick={handleQuit}>
-              Quit
-            </button>
-          </div>
-        </div>
+    <div className="flex-1 flex flex-col items-center justify-center">
+      <div className="grid grid-cols-2 gap-4">
+        <VideoPlayer stream={stream} />
+        {Object.values(peers).map((peer) => (
+          <VideoPlayer key={peer.id} stream={peer.stream} />
+        ))}
       </div>
-    </>
+      <div className="absolute bottom-2 left-0 right-0 bg-opacity-50 text-white p-2 flex justify-center">
+        <button className="p-2 bg-blue-500 hover:bg-blue-600 rounded-md mr-2">
+          Toggle Camera
+        </button>
+        <button className="p-2 bg-blue-500 hover:bg-blue-600 rounded-md mr-2">
+          Toggle Audio
+        </button>
+        <button className="p-2 bg-blue-500 hover:bg-blue-600 rounded-md" onClick={handleQuit}>
+          Quit
+        </button>
+      </div>
+    </div>
+
   );
 };
 

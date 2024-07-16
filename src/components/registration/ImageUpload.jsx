@@ -59,7 +59,7 @@ function ImageUpload({url, setUrl}) {
         </div>
         <div className="">
           <Button
-            className=' w-72 lg:w-96  bg-[#FC427B]'
+            className=' w-72 lg:w-96  bg-[#0f172a]'
             onClick={saveImage}
           >
             Upload Image

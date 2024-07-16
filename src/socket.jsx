@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo } from 'react'
-import io from 'socket.io-client'
+import { createContext, useContext, useMemo } from 'react';
+import io from 'socket.io-client';
 const url = import.meta.env.VITE_BACKEND_URL;
 
 const SocketContext = createContext();
@@ -16,6 +16,5 @@ const SocketProvider = ({children}) => {
         </SocketContext.Provider>
     )
 }
-
-export {SocketProvider,getSocket}
+export { getSocket, SocketProvider };
 

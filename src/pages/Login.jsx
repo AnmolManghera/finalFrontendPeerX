@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import ImageUpload from "../components/registration/ImageUpload";
 import ChipSelector from "../components/registration/ChipSelect";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { logout, setCredentials } from "../../redux/authSlice";
+import { AuthContext } from "../App";
+import { loginAction, logoutAction } from "../authActions";
 const url = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
@@ -18,7 +18,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [finalEmail, setFinalEmail] = useState("");
-  const dispatch = useDispatch();
+  const { state, dispatch } = useContext(AuthContext);
+
   const setYearAndEmail = (e) => {
     setEmail(e.target.value);
     const finale = e.target.value + "@nitj.ac.in";
@@ -53,11 +54,11 @@ const Login = () => {
       )
       .then(function ({ data }) {
         // console.log(response);
-        dispatch(setCredentials(data.user));
+        dispatch(loginAction(data.user));
       })
       .catch(function (error) {
         console.log(error);
-        // dispatch(logout())
+        dispatch(logoutAction())
       });
   };
   const handleRegister = (e) => {
@@ -79,11 +80,11 @@ const Login = () => {
       )
       .then(function ({ data }) {
         // console.log(data.user);
-        dispatch(setCredentials(data.user));
+        dispatch(loginAction(data.user));
       })
       .catch(function (error) {
         console.log(error);
-        // dispatch(logout());
+        dispatch(logoutAction());
       });
   };
   const handleSubmit = (e) => {
@@ -105,11 +106,7 @@ const Login = () => {
   return isLogin ? (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+        <h1 className="mt-10 text-center text-8xl font-bold leading-9 tracking-tight text-gray-900">PeerX</h1>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
@@ -161,7 +158,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full justify-center rounded-md bg-[#0f172a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm"
               onClick={handleLogin}
             >
               Sign in
@@ -169,19 +166,15 @@ const Login = () => {
           </div>
         </form>
 
-        
+        <button onClick={()=>(setIsLogin(false))}>Register</button>
       </div>
-      <button onClick={()=>(setIsLogin(false))}>Register</button>
+
     </div>
     
   ) : (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+      <h1 className="mt-10 text-center text-8xl font-bold leading-9 tracking-tight text-gray-900">PeerX</h1>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           {step === 1
             ? "Step 1: Personal Information"
@@ -189,7 +182,7 @@ const Login = () => {
             ? "Step 2: Additional Information"
             : step === 3
             ? "Step 3: Customization"
-            : "Step 4: Final Step"}
+            : "Step 4: Upload Photo"}
         </h2>
       </div>
 
@@ -208,7 +201,7 @@ const Login = () => {
                   id="username"
                   type="text"
                   autoComplete="username"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -324,13 +317,13 @@ const Login = () => {
               <ImageUpload url={imageUrl} setUrl={setImageUrl} />
             </>
           )}
-          <div className="absolute bottom-0">
+          <div className="absolute bottom-[20vh]">
             <div className="flex justify-between">
               {step > 1 && (
                 <button
                   type="button"
                   onClick={handlePreviousStep}
-                  className="flex w-1/2 justify-center rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                  className="flex w-1/2 justify-center rounded-md bg-gray-200 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-700"
                 >
                   Previous
                 </button>
@@ -340,7 +333,7 @@ const Login = () => {
                 type="submit"
                 className={`flex w-${
                   step === 1 ? "full" : "1/2"
-                } justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                } justify-center rounded-md bg-[#0f172a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm`}
               >
                 {step === 1
                   ? "Next"

@@ -58,14 +58,13 @@ const ChipSelector = ({ tags, selected, setSelected }) => {
           </div>
         ) : null}
         <div className="card flex items-center justify-between p-3 w-80 gap-2.5">
-          <Icons.Search />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value.trimStart())}
             placeholder="Search or Create tags"
-            className="bg-transparent text-sm flex-1 caret-rose-600"
+            className="bg-transparent text-sm flex-1"
             onFocus={() => setMenuOpen(true)}
             onBlur={() => setMenuOpen(false)}
             onKeyDown={(e) => {
@@ -77,7 +76,7 @@ const ChipSelector = ({ tags, selected, setSelected }) => {
             }}
           />
           <button
-            className="text-sm disabled:text-gray-300 text-rose-500 disabled:cursor-not-allowed"
+            className="text-sm disabled:text-gray-300 text-[#0f172a] disabled:cursor-not-allowed"
             disabled={isDisable}
             onClick={() => {
               if (isDisable) {
@@ -101,7 +100,7 @@ const ChipSelector = ({ tags, selected, setSelected }) => {
                 filteredTags.map((tag, i) => (
                   <li
                     key={tag}
-                    className="p-2 cursor-pointer hover:bg-rose-50 hover:text-rose-500 rounded-md w-full"
+                    className="p-2 cursor-pointer rounded-md w-full"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
                       setMenuOpen(true);

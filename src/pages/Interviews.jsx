@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getSocket } from "../socket";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,6 @@ const Interviews = () => {
     console.log(socket)
   };
   const enterRoom = ({ roomId }) => {
-    
     console.log({ roomId });
     navigate(`/room/${roomId}`);
   };

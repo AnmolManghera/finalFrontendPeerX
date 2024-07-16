@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import MeetingCard from "./MeetingCard";
 const url = import.meta.env.VITE_BACKEND_URL;
 
 const MyMeetings = () => {
@@ -49,18 +50,15 @@ const MyMeetings = () => {
     );
   }
   return (
-    <div>
-      
-      {meetings.map((meeting) => (
-        <div>
-        <div key={meeting._id}>
-          {meeting._id}
-        </div>
-        <button className="bg-rose-400" onClick={()=>handleJoining(meeting._id)}>
-          Join Meeting
-        </button>
-        </div>
-      ))}
+    <div className="ml-10 mt-4">
+      <ul
+        role="list"
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {meetings?.map((meeting) => (
+          <MeetingCard meeting={meeting} key={meeting._id} />
+        ))}
+      </ul>
     </div>
   );
 };

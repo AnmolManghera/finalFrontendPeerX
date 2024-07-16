@@ -9,6 +9,7 @@ import { NEW_MESSAGE } from "../constants/events";
 const url = import.meta.env.VITE_BACKEND_URL;
 
 function Chat() {
+  const [otherMember,setOtherMember] = useState(null);
   const [members,setMembers] = useState([]);
   const [message,setMessage] = useState("");
   const [msgs,setMsgs] = useState([]);
@@ -29,7 +30,8 @@ function Chat() {
     try {
       const {data} = await axios.get(`${url}/chat/${chatId}`,{ withCredentials: true })
       setMembers(data?.chat?.members)
-      console.log(data?.chat?.members);
+      setOtherMember(data?.chat?.members[0])
+      console.log(data?.chat?.members[0]);
     } catch (error) {
       console.log(error)
     }
@@ -69,26 +71,10 @@ function Chat() {
   return (
     <div className="container">
       <div className="leftside">
-        {/* <div className="header">
-          <div className="userimg">
-            <img src="assets/images/user.jpg" className="cover" />
-          </div>
-          <ul className="nav_icons">
-            <li>
-              <ion-icon name="add-circle-outline"></ion-icon>
-            </li>
-            <li>
-              <ion-icon name="chatbox-outline"></ion-icon>
-            </li>
-            <li>
-              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-            </li>
-          </ul>
-        </div> */}
         <div className="search_chat">
           <div>
-            <input type="text" placeholder="Search for a chat" />
-            <ion-icon name="search-outline"></ion-icon>
+            {/* <input type="text" placeholder="Search for a chat" />
+            <ion-icon name="search-outline"></ion-icon> */}
           </div>
         </div>
         {/* <!-- Chat List --> */}
@@ -100,12 +86,12 @@ function Chat() {
         <div className="header">
           <div className="imgText">
             <div className="userimg">
-              <img src="assets/images/user.jpg" className="cover" />
+              <img src={otherMember?.url} className="cover" />
             </div>
             <h4>
-              Johnny Shelby
+              {otherMember?.name}
               <br />
-              <span>online</span>
+              <span></span>
             </h4>
           </div>
           <ul className="nav_icons">
@@ -127,8 +113,8 @@ function Chat() {
         </div>
         {/* <!-- message input --> */}
         <div className="chatbox_input">
-          <ion-icon name="happy-outline"></ion-icon>
-          <ion-icon name="attach-outline"></ion-icon>
+          {/* <ion-icon name="happy-outline"></ion-icon>
+          <ion-icon name="attach-outline"></ion-icon> */}
           <input type="text" placeholder="Type a message...." value={message} onChange={(e)=>setMessage(e.target.value)}/>
           <button onClick={sendMessage}><ion-icon name="send-outline"></ion-icon></button>
         </div>

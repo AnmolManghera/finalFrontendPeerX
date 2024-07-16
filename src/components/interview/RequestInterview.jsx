@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
-import UserAccounts from "./UserList";
 import axios from "axios";
 import { InterviewTable } from "./InterviewTable";
 const url = import.meta.env.VITE_BACKEND_URL;

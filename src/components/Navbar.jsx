@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/users" className="title">
-        Alumanca
+        PeerX
       </Link>
       <div className="menu" onClick={()=> setOpen(!open)}>
         <span></span>
@@ -22,7 +22,7 @@ const Navbar = () => {
           <NavLink to="/chats">Chat</NavLink>
         </li>
         <li>
-          <NavLink to="/myinterviews">Interviews</NavLink>
+          <NavLink to="/interviews">Interviews</NavLink>
         </li>
         <li>
           <NavLink to="/notifications">Notifications</NavLink>
